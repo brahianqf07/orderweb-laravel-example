@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('technician', function (Blueprint $table) {
+        Schema::create('role', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('document')->unique()->comment('cedula');
-            $table->string('name', 80)->comment('nombre');
-            $table->string('speciality', 50)->nullable()->comment('especialidad');
-            $table->string('phone', 38)->nullable()->comment('telefono');
+            $table->string('name', 50)->comment('ADMINISTRADOR, SUPERVISOR');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('technician');
+        Schema::dropIfExists('role');
     }
 };

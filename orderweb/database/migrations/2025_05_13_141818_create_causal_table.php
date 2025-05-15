@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('type_activity', function (Blueprint $table) {
+        Schema::create('causal', function (Blueprint $table) {
             $table->id();
-            $table->string('description', 100)->comment('descripcion');
+            $table->string('description', 100)->comment('descripción');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('type_activity');
+        Schema::dropIfExists('causal');
     }
 };

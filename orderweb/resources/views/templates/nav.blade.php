@@ -38,8 +38,8 @@
                     </a>
                     <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>                        
+                            <a class="collapse-item" href="{{ route('order.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('order.create') }}">Crear</a>                       
                         </div>
                     </div>
                 </li> 
@@ -52,10 +52,11 @@
                     </a>
                     <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>
+                            <a class="collapse-item" href="{{ route('causal.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('causal.create') }}">Crear</a>
                         </div>
                     </div>
+                    
                 </li>             
 
                 <li class="nav-item">
@@ -66,8 +67,8 @@
                     </a>
                     <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>
+                            <a class="collapse-item" href="{{ route('observation.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('observation.create') }}">Crear</a>
                         </div>
                     </div>
                 </li>
@@ -91,8 +92,8 @@
                     </a>
                     <div id="collapse4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>
+                            <a class="collapse-item" href="{{ route('activity.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('activity.create') }}">Crear</a>
                         </div>
                     </div>
                 </li>
@@ -105,8 +106,8 @@
                     </a>
                     <div id="collapse5" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>
+                            <a class="collapse-item" href="{{ route('type_activity.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('type_activity.create') }}">Crear</a>
                         </div>
                     </div>
                 </li>
@@ -129,8 +130,8 @@
                     </a>
                     <div id="collapse6" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>
+                            <a class="collapse-item" href="{{ route('technician.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('technician.create') }}">Crear</a>
                         </div>
                     </div>
                 </li>

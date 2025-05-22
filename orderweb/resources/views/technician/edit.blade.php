@@ -4,8 +4,9 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 mb-4">
-        <form action="" method="post">
+        <form action="{{ route('technician.update', $technician["id"]) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row form-group">
                 <div class="col-lg-6 mb-4">
                     <label for="document">Documento</label>
@@ -19,7 +20,13 @@
                 <div class="row form-group">
                 <div class="col-lg-6 mb-4">
                     <label for="especiality">Especialidad</label>
-                    <input type="text" class="form-control" name="especiality" id="especiality" required>
+                    <input list="specialities-list" class="form-control" name="especiality" id="especiality" >
+                    <datalist id="specialities-list">
+                        <option>Instalación de redes</option>
+                        <option>Construcción</option>
+                        <option>Lectura de redes</option>
+                        <option>Plomería</option>
+                    </datalist>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <label for="phone">Teléfono</label>

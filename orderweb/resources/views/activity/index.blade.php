@@ -27,17 +27,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ( $activities as $activity)
+                        
+                    @endforeach
                     <tr>
-                        <td>1</td>
-                        <td>Actividad prueba</td>
-                        <td>16</td>
-                        <td>Aitor Tilla</td>
-                        <td>Tipo prueba</td>
+                        <td>{{ $activity["id"] }}</td>
+                        <td>{{ $activity["description"] }}</td>
+                        <td>{{ $activity["hours"] }}</td>
+                        <td>{{ $activity->technician->document }} - {{ $activity->technician->name }}</td>
+                        <td>{{ $activity->type_activity->description }}</td>
                         <td>
-                            <a href="#" title="editar" class="btn btn-primary btn-circle btn-sm">
+                            <a href="{{ route('activity.edit',$activity["id"]) }}" title="editar" class="btn btn-primary btn-circle btn-sm">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <a href="#" title="eliminar" class="btn btn-danger btn-circle btn-sm"
+                            <a href="{{ route('activity.destroy',$activity["id"]) }}" title="eliminar" class="btn btn-danger btn-circle btn-sm"
                             onclick="return remove();">
                                 <i class="fas fa-trash"></i>
                             </a>

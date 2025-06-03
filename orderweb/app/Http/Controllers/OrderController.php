@@ -9,9 +9,33 @@ use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    private $rules = [
+        'legalization_date' => 'required|date|date_format:Y-m-d',
+        'address' => 'required|string|min:3|max:50',
+        'city' =>'required|string|min:3|max:80',
+        'causal_id' =>'required|numeric|min:1|max:99999999999999999',
+        'observation_id' => 'max:99999999999999999'
+    ];
+
+    private $traductionAttributes = [
+        'legalization_date' => 'fecha de legalización',
+        'address' => 'dirección',
+        'city' => 'ciudad',
+        'causal_id' => 'causal',
+        'observation_id' => 'observación'
+    ]; 
+
+    private $cities = [
+        ['name' => 'TULUA', 'value' => 'TULUA'],
+        ['name' => 'PALMIRA', 'value' => 'PALMIRA'],
+        ['name' => 'CALI', 'value' => 'CALI'],
+        ['name' => 'BUGA', 'value' => 'BUGA']
+    ];
+
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +52,8 @@ class OrderController extends Controller
     {
         $causals = Causal::all();
         $observations = Observation::all();
-        return view('order.create', compact('causals', 'observations')); 
+        $cities = $this->cities;
+        return view('order.create', compact('causals', 'observations', 'cities'));
     }
 
     /**
@@ -36,6 +61,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $validator =  Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if($validator->fails())
+        {
+            $errors = $validator->errors();
+            return redirect()->route('order.create')
+                            ->withInput()->withErrors($errors);
+        }                  
         $order = Order::create($request->all());
         session()->flash('message', 'Orden creada exitosamente');
         return redirect()->route('order.index');
@@ -59,12 +92,8 @@ class OrderController extends Controller
         {
             $causals = Causal::all();
             $observations = Observation::all();
-            $cities =[
-                ['name' => 'TULUA', 'value' => 'TULUA'],
-                ['name' => 'PALMIRA', 'value' => 'PALMIRA'],
-                ['name' => 'CALI', 'value' => 'CALI'],
-                ['name' => 'BUGA', 'value' => 'BUGA']
-            ];
+            $cities = $this->cities;
+            
 
             //consultar actividades disponibles
             $query = DB::select("SELECT *FROM activity WHERE activity.id NOT IN (
@@ -89,6 +118,15 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validator =  Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if($validator->fails())
+        {
+            $errors = $validator->errors();
+            return redirect()->route('order.edit', $id)
+                            ->withInput()->withErrors($errors);
+        }                  
+
         $order = Order::find($id);
         if($order) 
         {

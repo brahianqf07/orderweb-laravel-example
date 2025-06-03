@@ -2,6 +2,7 @@
 @section('title', 'Editar Tipo de Actividad')
 @section('header', 'Editar Tipo de Actividad')
 @section('content')
+    @include('templates.messages')
     <div class = "row">
         <div class="col-lg-12 mb-4">
             <form action="{{ route('type_activity.update', $type_activity['id']) }}" method="POST">

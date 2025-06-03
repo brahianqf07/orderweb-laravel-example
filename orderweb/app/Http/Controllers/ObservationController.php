@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ObservationController extends Controller
 {
+    private $rules = [
+        'description' => 'required|string|min:3|max:100'
+    ];
+
+    private $tradutionAttributes = [
+        'description' => 'descripción'
+    ];
     /**
      * Display a listing of the resource.
      */

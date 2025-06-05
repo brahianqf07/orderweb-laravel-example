@@ -10,9 +10,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet"> 
-
 </head>
-<body class ="bg-gradient-primary">
+<body class="bg-gradient-primary">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
@@ -25,7 +24,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
-                                    <div class="text center">
+                                    <div class="text-center">
                                         <h1 class="text-gray-900">Bienvenido</h1>
                                     </div>
 
@@ -34,16 +33,16 @@
                                     <form class="user" action="{{ route('auth.login') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" name="email" id="email" class="form-control form-control-user" 
-                                            placeholder="Correo electrónico" value="{{ old('email') }}">
+                                            <input type="email" name="email" id="email" class="form-control form-control-user"
+                                             placeholder="Correo electrónico" value="{{ old('email') }}">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password" id="password"
+                                            <input type="password" name="password" id="password" 
                                             class="form-control form-control-user" placeholder="Contraseña">
-                                        </div>
-                                        <button class="btn btn-primary btn-user btn-block">
+                                        </div>  
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Ingresar
-                                        </button>
+                                        </button>  
                                     </form>
 
                                     <hr>
@@ -59,5 +58,6 @@
             </div>
         </div>
     </div>
+    
 </body>
 </html>

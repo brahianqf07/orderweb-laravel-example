@@ -6,8 +6,8 @@ use App\Models\Activity;
 use App\Models\Causal;
 use App\Models\Observation;
 use App\Models\Order;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,31 +16,31 @@ class OrderController extends Controller
     private $rules = [
         'legalization_date' => 'required|date|date_format:Y-m-d',
         'address' => 'required|string|min:3|max:50',
-        'city' =>'required|string|min:3|max:80',
-        'causal_id' =>'required|numeric|min:1|max:99999999999999999',
-        'observation_id' => 'max:99999999999999999'
+        'city' => 'required|string|min:3|max:80',
+        'causal_id' => 'required|numeric|min:1|max:99999999999999999999',
+        'observation_id' => 'max:99999999999999999999'
     ];
 
     private $traductionAttributes = [
         'legalization_date' => 'fecha de legalización',
         'address' => 'dirección',
         'city' => 'ciudad',
-        'causal_id' => 'causal',
+        'causal_id' => 'causal' ,
         'observation_id' => 'observación'
-    ]; 
+    ];
 
     private $cities = [
         ['name' => 'TULUA', 'value' => 'TULUA'],
-        ['name' => 'PALMIRA', 'value' => 'PALMIRA'],
         ['name' => 'CALI', 'value' => 'CALI'],
-        ['name' => 'BUGA', 'value' => 'BUGA']
+        ['name' => 'BUGA', 'value' => 'BUGA'],
+        ['name' => 'PALMIRA', 'value' => 'PALMIRA']
     ];
-
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $orders = Order::all();
         return view('order.index', compact('orders'));
     }
@@ -52,8 +52,8 @@ class OrderController extends Controller
     {
         $causals = Causal::all();
         $observations = Observation::all();
-        $cities = $this->cities;
-        return view('order.create', compact('causals', 'observations', 'cities'));
+        $cities = $this->cities;  
+        return view('order.create', compact('causals', 'observations', 'cities')); 
     }
 
     /**
@@ -68,9 +68,10 @@ class OrderController extends Controller
             $errors = $validator->errors();
             return redirect()->route('order.create')
                             ->withInput()->withErrors($errors);
-        }                  
+        }
+        
         $order = Order::create($request->all());
-        session()->flash('message', 'Orden creada exitosamente');
+        session()->flash('message', 'Registro creado exitosamente');
         return redirect()->route('order.index');
     }
 
@@ -92,23 +93,24 @@ class OrderController extends Controller
         {
             $causals = Causal::all();
             $observations = Observation::all();
-            $cities = $this->cities;
-            
+            $cities = $this->cities;           
 
             //consultar actividades disponibles
-            $query = DB::select("SELECT *FROM activity WHERE activity.id NOT IN (
+            $query = DB::select("SELECT * FROM activity WHERE activity.id NOT IN (
                                     SELECT order_activity.activity_id FROM order_activity
                                     WHERE order_activity.order_id = ?)", [$id]);
+            
             $availableActivities = Collection::make($query);
 
-            //Consultar actividades agregadas a la orden
+            //consultar actividades agregadas a la orden
             $addedActivities = $order->activities;
-
-            return view('order.edit', compact('order', 'causals', 'observations', 'cities', 'availableActivities', 'addedActivities'));
+            
+            return view('order.edit', compact('order', 'causals', 'observations', 'cities',
+                                        'availableActivities', 'addedActivities'));
         }
         else
         {
-            session()->flash('warning', 'No se encuentra la orden solicitada');
+            session()->flash('warning', 'No se encuentra el registro solicitado');
             return redirect()->route('order.index');
         }  
     }
@@ -125,17 +127,17 @@ class OrderController extends Controller
             $errors = $validator->errors();
             return redirect()->route('order.edit', $id)
                             ->withInput()->withErrors($errors);
-        }                  
-
+        }
+        
         $order = Order::find($id);
         if($order) 
         {
             $order->update($request->all());
-            session()->flash('message', 'Orden actualizado exitosamente');
+            session()->flash('message', 'Registro actualizado exitosamente');
         }
         else
         {
-            session()->flash('warning', 'No se encuentra la orden solicitado');            
+            session()->flash('warning', 'No se encuentra el registro solicitado');            
         } 
 
         return redirect()->route('order.index');
@@ -150,29 +152,32 @@ class OrderController extends Controller
         if($order) 
         {
             $order->delete();
-            session()->flash('message', 'Orden eliminada exitosamente');
+            session()->flash('message', 'Registro eliminado exitosamente');
         }
         else
         {
-            session()->flash('warning', 'No se encuentra la orden solicitado');            
+            session()->flash('warning', 'No se encuentra el registro solicitado');            
         } 
 
         return redirect()->route('order.index');
     }
 
+    /**
+     * agrega una actividad a una orden
+     */
     public function add_activity(string $order_id, string $activity_id)
     {
         $order = Order::find($order_id);
         if(!$order)
         {
             session()->flash('error', 'No se encuentra la orden');
-            return redirect()->route('order.edit', $order_id)->withInput();
+            return redirect()->route('order.edit', $order_id)->withInput();   
         }
         $activity = Activity::find($activity_id);
         if(!$activity)
         {
             session()->flash('error', 'No se encuentra la actividad');
-            return redirect()->route('order.edit', $order_id)->withInput();
+            return redirect()->route('order.edit', $order_id)->withInput();   
         }
 
         //guardar la actividad en order_activity
@@ -182,7 +187,7 @@ class OrderController extends Controller
     }
 
     /**
-     * retira una actividad a la orden
+     * retira una actividad a una orden
      */
     public function remove_activity(string $order_id, string $activity_id)
     {
@@ -190,19 +195,18 @@ class OrderController extends Controller
         if(!$order)
         {
             session()->flash('error', 'No se encuentra la orden');
-            return redirect()->route('order.edit', $order_id)->withInput();
+            return redirect()->route('order.edit', $order_id)->withInput();   
         }
         $activity = Activity::find($activity_id);
         if(!$activity)
         {
             session()->flash('error', 'No se encuentra la actividad');
-            return redirect()->route('order.edit', $order_id)->withInput();
+            return redirect()->route('order.edit', $order_id)->withInput();   
         }
 
-        //eliminar la actividad en order_activity
+        //elimina la actividad en order_activity
         $order->activities()->detach($activity->id);
         session()->flash('message', 'Actividad removida exitosamente');
         return redirect()->route('order.edit', $order_id);
     }
 }
-

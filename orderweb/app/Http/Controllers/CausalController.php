@@ -38,7 +38,6 @@ class CausalController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $validator =  Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
         if($validator->fails())

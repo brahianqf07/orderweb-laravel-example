@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\Validator;
 
 class TechnicianController extends Controller
 {
-    private $rules = [
-        'name' => 'max:80',
-        'speciality' =>'max:50',
-        'phone' =>'string|min:1|max:30'
+    private $rules = [        
+        'name' => 'required|string|min:3|max:80',
+        'speciality' => 'max:50',
+        'phone' => 'max:30'
     ];
 
     private $traductionAttributes = [
         'document' => 'documento',
         'name' => 'nombre',
         'speciality' => 'especialidad',
-        'phone' => 'teléfono'
-    ]; 
+        'phone' => 'teléfono' 
+    ];
+
     /**
      * Display a listing of the resource.
      */
@@ -42,7 +43,7 @@ class TechnicianController extends Controller
      */
     public function store(Request $request)
     {
-        $this->rules['document'] = 'required|numeric|unique:technician|min:3|max:9999999999999';
+        $this->rules['document'] = 'required|numeric|unique:technician|min:3|max:99999999999999999999';
         $validator =  Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
         if($validator->fails())
@@ -50,11 +51,10 @@ class TechnicianController extends Controller
             $errors = $validator->errors();
             return redirect()->route('technician.create')
                             ->withInput()->withErrors($errors);
-        } 
-
-        //dd($request);
+        }
+        
         $technician = Technician::create($request->all());
-        session()->flash('message', 'tecnico creado exitosamente');
+        session()->flash('message', 'Registro creado exitosamente');
         return redirect()->route('technician.index');
     }
 
@@ -72,15 +72,15 @@ class TechnicianController extends Controller
     public function edit(string $id)
     {
         $technician = Technician::find($id);
-        if($technician)//el tecnico existe existe
+        if($technician) 
         {
             return view('technician.edit', compact('technician'));
         }
         else
         {
-            session()->flash('warning', 'No se encuentra el tecnico solicitado');
+            session()->flash('warning', 'No se encuentra el registro solicitado');
             return redirect()->route('technician.index');
-        }
+        }  
     }
 
     /**
@@ -88,7 +88,7 @@ class TechnicianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->rules['document'] = 'required|numeric|unique:technician,document,'.$id.'|min:3|max:9999999999999';
+        $this->rules['document'] = 'required|numeric|unique:technician,document,'.$id.'|min:3|max:99999999999999999999';
         $validator =  Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
         if($validator->fails())
@@ -96,18 +96,19 @@ class TechnicianController extends Controller
             $errors = $validator->errors();
             return redirect()->route('technician.edit', $id)
                             ->withInput()->withErrors($errors);
-        } 
-
+        }
+        
         $technician = Technician::find($id);
-        if($technician)//el tecnico existe
+        if($technician) 
         {
             $technician->update($request->all());
-            session()->flash('message', 'Tecnico actualizado exitosamente');
+            session()->flash('message', 'Registro actualizado exitosamente');
         }
         else
         {
-            session()->flash('warning', 'No se encuentra el tecnico solicitado');
-        }
+            session()->flash('warning', 'No se encuentra el registro solicitado');            
+        } 
+
         return redirect()->route('technician.index');
     }
 
@@ -117,15 +118,15 @@ class TechnicianController extends Controller
     public function destroy(string $id)
     {
         $technician = Technician::find($id);
-        if($technician)//el tecnico existe
+        if($technician) 
         {
             $technician->delete();
-            session()->flash('message', 'Tecnico eliminado exitosamente');
+            session()->flash('message', 'Registro eliminado exitosamente');
         }
         else
         {
-            session()->flash('warning', 'No se encuentra el registro solicitado');
-        }
+            session()->flash('warning', 'No se encuentra el registro solicitado');            
+        } 
 
         return redirect()->route('technician.index');
     }

@@ -13,17 +13,17 @@ class ActivityController extends Controller
     private $rules = [
         'description' => 'required|string|min:3|max:100',
         'hours' => 'required|numeric|min:1|max:9999999999',
-        'technician_id' =>'required|numeric|min:1|max:99999999999999999',
-        'type_activity_id' =>'required|numeric|min:1|max:99999999999999999'
+        'technician_id' => 'required|numeric|min:1|max:99999999999999999999',
+        'type_activity_id' => 'required|numeric|min:1|max:99999999999999999999'
     ];
 
     private $traductionAttributes = [
         'description' => 'descripción',
         'hours' => 'horas',
-        'technician_id' => 'tecnico',
-        'tipe_activity_id' => 'tipo de actividad'
+        'technician_id' => 'técnico',
+        'type_activity_id' => 'tipo de actividad' 
     ];
-
+    
     /**
      * Display a listing of the resource.
      */
@@ -56,19 +56,10 @@ class ActivityController extends Controller
             return redirect()->route('activity.create')
                             ->withInput()->withErrors($errors);
         }
-        
-        //dd($request);
-        $activity = Activity::create($request->all());
-        session()->flash('message', 'registro creado exitosamente');
-        return redirect()->route('activity.index');
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        $activity = Activity::create($request->all());
+        session()->flash('message', 'Registro creado exitosamente');
+        return redirect()->route('activity.index');
     }
 
     /**
@@ -77,7 +68,7 @@ class ActivityController extends Controller
     public function edit(string $id)
     {
         $activity = Activity::find($id);
-        if($activity)//la actividad existe
+        if($activity) 
         {
             $technicians = Technician::all();
             $types = TypeActivity::all();
@@ -87,7 +78,7 @@ class ActivityController extends Controller
         {
             session()->flash('warning', 'No se encuentra el registro solicitado');
             return redirect()->route('activity.index');
-        }
+        }    
     }
 
     /**
@@ -95,25 +86,26 @@ class ActivityController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $validator =  Validator::make($request->all(), $this->rules);
+        $validator =  Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
         if($validator->fails())
         {
             $errors = $validator->errors();
-            return redirect()->route('activity.edit')
+            return redirect()->route('activity.edit', $id)
                             ->withInput()->withErrors($errors);
         }
-
+        
         $activity = Activity::find($id);
-        if($activity)//la actividad existe
+        if($activity) 
         {
             $activity->update($request->all());
-            session()->flash('message', 'Actividad actualizada exitosamente');
+            session()->flash('message', 'Registro actualizado exitosamente');
         }
         else
         {
-            session()->flash('warning', 'No se encuentra la actividad solicitada');
-        }
+            session()->flash('warning', 'No se encuentra el registro solicitado');            
+        } 
+
         return redirect()->route('activity.index');
     }
 
@@ -123,15 +115,15 @@ class ActivityController extends Controller
     public function destroy(string $id)
     {
         $activity = Activity::find($id);
-        if($activity)//la actividad existe
+        if($activity) 
         {
             $activity->delete();
-            session()->flash('message', 'Actividad eliminada exitosamente');
+            session()->flash('message', 'Registro eliminado exitosamente');
         }
         else
         {
-            session()->flash('warning', 'No se encuentra la actividad solicitado');
-        }
+            session()->flash('warning', 'No se encuentra el registro solicitado');            
+        } 
 
         return redirect()->route('activity.index');
     }

@@ -29,23 +29,25 @@
             </div>
 
             
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse1"
+            @can('admin-supervisor')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse1"
                     aria-expanded="true" aria-controls="collapse1">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Ordenes</span>
-                    </a>
-                    <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{ route('order.index') }}">Consultar</a>
-                            <a class="collapse-item" href="{{ route('order.create') }}">Crear</a>                       
-                        </div>
+                </a>
+                <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('order.index') }}">Consultar</a>
+                        <a class="collapse-item" href="{{ route('order.create') }}">Crear</a>                        
                     </div>
-                </li> 
+                </div>
+            </li> 
+            @endcan
             
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2"
+            @can('administrador')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2"
                     aria-expanded="true" aria-controls="collapse2">
                         <i class="fas fa-fw fa-plus"></i>
                         <span>Causales</span>
@@ -56,7 +58,6 @@
                             <a class="collapse-item" href="{{ route('causal.create') }}">Crear</a>
                         </div>
                     </div>
-                    
                 </li>             
 
                 <li class="nav-item">
@@ -72,7 +73,7 @@
                         </div>
                     </div>
                 </li>
-            
+            @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider"/>
@@ -83,7 +84,7 @@
             </div>
 
             
-                <!-- Nav Item - Pages Collapse Menu -->
+                @can('admin-supervisor')
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
                     aria-expanded="true" aria-controls="collapse4">
@@ -97,7 +98,9 @@
                         </div>
                     </div>
                 </li>
-           
+                @endcan
+
+                @can('administrador')   
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse5"
                     aria-expanded="true" aria-controls="collapse5">
@@ -111,12 +114,13 @@
                         </div>
                     </div>
                 </li>
-           
+                @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider"/>
 
-           
+
+            @can('supervisor')
                 <!-- Heading -->
                 <div class="sidebar-heading">
                     Técnicos
@@ -135,7 +139,8 @@
                         </div>
                     </div>
                 </li>
-            
+            @endcan
+
                 <!-- Heading -->
                 <div class="sidebar-heading">
                     Reportes
@@ -168,4 +173,3 @@
 
     </body>
 </html>
-

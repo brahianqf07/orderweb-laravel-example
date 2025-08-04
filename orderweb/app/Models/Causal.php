@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Causal extends Model
 {
     use HasFactory;
-
-    protected $table = 'causal';
+    protected $table = "causal";
     protected $fillable = [
-        'description',
+        'description'
     ];
-    
+
     public function orders()
     {
         return $this->hasMany(Order::class);

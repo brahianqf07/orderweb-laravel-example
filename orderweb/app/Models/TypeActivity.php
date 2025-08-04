@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TypeActivity extends Model
 {
     use HasFactory;
-
     protected $table = 'type_activity';
     protected $fillable = [
-        'description',
+        'description'
     ];
 
     public function activities()

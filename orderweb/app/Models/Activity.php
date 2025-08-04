@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     use HasFactory;
-
-    protected $table = 'activity';
+    protected $table = "activity";
     protected $fillable = [
         'description',
         'hours',
-        'techniciam_id',
+        'technician_id',
         'type_activity_id'
     ];
 
@@ -30,6 +29,5 @@ class Activity extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_activity', 'order_id', 'activity_id');
-
     }
 }

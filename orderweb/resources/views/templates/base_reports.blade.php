@@ -2,9 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('css/reports.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/report.css') }}">
 </head>
 <body>
     <section id="header">
@@ -16,10 +14,10 @@
                     </div>
                 </th>
                 <th>
-                    <ps style="text-align: center; font-size: 14px">
+                    <p style="text-align: center; font-size: 14px">
                         @yield('header')
-                    </p>
-                </th>
+                    </p> 
+                </th> 
             </tr>
         </table>
     </section>
@@ -41,8 +39,8 @@
     @yield('content')
 
     <footer id="version_text">
-        <p>Generado por Orderweb 1.0</p>
+        <p>Generado por OrderWeb 1.0</p>
     </footer>
-    
+
 </body>
 </html>

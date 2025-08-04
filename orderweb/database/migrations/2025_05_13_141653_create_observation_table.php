@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('causal', function (Blueprint $table) {
+        Schema::create('observation', function (Blueprint $table) {
             $table->id();
             $table->string('description', 100)->comment('descripción');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('causal');
+        Schema::dropIfExists('observation');
     }
 };

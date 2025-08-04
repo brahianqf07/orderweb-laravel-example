@@ -1,20 +1,22 @@
 @extends('templates.base')
-@section('title', 'Crear orden')
-@section('header', 'Crear orden')
+@section('title', 'Crear órdenes')
+@section('header', 'Crear órdenes')
 @section('content')
     @include('templates.messages')
     <div class="row">
         <div class="col-lg-12 mb-4">
-            <form action="{{ route('order.store') }}" method="post">
+            <form action="{{ route('order.store') }}" method="POST">
                 @csrf
                 <div class="row form-group">
                     <div class="col-lg-6 mb-4">
                         <label for="legalization_date">Fecha legalización</label>
-                        <input type="date" class="form-control" name="legalization_date" id="legalization_date" required>
+                        <input type="date" class="form-control" name="legalization_date" 
+                        id="legalization_date" required value="{{ old('legalization_date') }}">
                     </div>
                     <div class="col-lg-6 mb-4">
                         <label for="address">Dirección</label>
-                        <input type="text" class="form-control" name="address" id="address" required>
+                        <input type="text" class="form-control" name="address" id="address" 
+                        required value="{{ old('address') }}">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -27,18 +29,16 @@
                                 </option>
                             @endforeach
                         </select>
-                            <option value="TULUÁ">TULUÁ</option>
-                            <option value="CALI">CALI</option>
-                            <option value="BUGA">BUGA</option>
-                            <option value="PALMIRA">PALMIRA</option>
-                        </select>
                     </div>
                     <div class="col-lg-4 mb-4">
                         <label for="causal_id">Causal</label>
-                        <select name="causal_id" id="causal_id" class="form-control">
+                        <select name="causal_id" id="causal_id" class="form-control" required>
                             <option value="">Seleccione</option>
                             @foreach ($causals as $causal)
-                                <option value="{{ $causal['id'] }}">{{ $causal['description'] }}</option>
+                                <option value="{{ $causal['id'] }}" 
+                                @if(old('causal_id') == $causal['id']) selected @endif>
+                                    {{ $causal['description'] }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -46,8 +46,11 @@
                         <label for="observation_id">Observación</label>
                         <select name="observation_id" id="observation_id" class="form-control">
                             <option value="">Seleccione</option>
-                            @foreach ($observations as $observation)
-                                <option value="{{ $observation['id'] }}">{{ $observation['description'] }}</option>
+                             @foreach ($observations as $observation)
+                                <option value="{{ $observation['id'] }}" 
+                                @if(old('observation_id') == $observation['id']) selected @endif>
+                                    {{ $observation['description'] }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -56,7 +59,6 @@
                     <div class="col-lg-6">
                         <button type="submit" class="btn btn-primary btn-block">Guardar</button>
                     </div>
-                    <br><br>
                     <div class="col-lg-6">
                         <a href="{{ route('order.index') }}" class="btn btn-secondary btn-block">Cancelar</a>
                     </div>
@@ -73,6 +75,8 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+
 @endsection

@@ -11,8 +11,8 @@ class AuthController extends Controller
 {
     private $rules = [
         'name' => 'required|string|max:255',
-        'email' =>'required|string|email|max:255|unique:users',
-        'password' =>'required|string|max:255|min:8',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|max:255|min:8',
         'password_confirmation' => 'required|same:password'
     ];
 
@@ -21,6 +21,7 @@ class AuthController extends Controller
         'password' => 'contraseña',
         'password_confirmation' => 'confirmar contraseña'
     ];
+    
     /**
      * Display a listing of the resource.
      */
@@ -60,7 +61,6 @@ class AuthController extends Controller
         session()->flash('message', 'Registro creado exitosamente');
         return redirect()->route('auth.index');
     }
-    
 
     /**
      * Display the specified resource.
